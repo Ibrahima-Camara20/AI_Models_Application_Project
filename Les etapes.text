@@ -25,7 +25,7 @@
         Max images par classe: 237
         Moyenne images par classe: 166.99
 4. Le prétraitement des images (taille, format) dans le fichier preprocess_images.py du dossier pre
-        ✅ Prétraitement terminé
+           Prétraitement terminé
         Total images traitées  : 17534
         Images réussies        : 17534
         Images échouées        : 0
