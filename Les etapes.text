@@ -30,3 +30,13 @@
         Images réussies        : 17534
         Images échouées        : 0
         Dossier de sortie      : C:\Users\camar\AI_Models_Apllication_Project\data_preprocessed\105_classes_pins_dataset_224
+5. Partager le dataset en train, validation et test dans le fichier split_dataset.py du dossier pre
+                    Split terminé
+        Classes              : 105
+        Train images         : 12225
+        Val images           : 3463
+        Test images          : 1846
+        Total images         : 17534
+        Dossier de sortie    : C:\Users\camar\AI_Models_Apllication_Project\data_splits
+        Ratios demandés      : train=0.7, val=0.2, test=0.1
+        Seed                 : 42
