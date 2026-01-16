@@ -2,11 +2,9 @@
 __pycache__/
 data_splits/
 data/
-working/
 outputs/
 SETUP_INTEL_GPU.txt
 mes_essai.txt
-dataset/
 pre/
 __pycache__/
 Les etapes.txt
