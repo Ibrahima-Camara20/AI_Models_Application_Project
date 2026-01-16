@@ -109,3 +109,6 @@ def extract_faces(input_dir, output_dir, confidence_threshold):
     except Exception as e:
         print(f"[ERREUR CRITIQUE] Échec de l'extraction des visages: {e}")
         raise
+
+if __name__ == "__main__":
+    extract_faces("../working", "../faces_dataset", 0.9)
