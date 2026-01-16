@@ -4,5 +4,10 @@ data_splits/
 data/
 working/
 outputs/
-features/
 SETUP_INTEL_GPU.txt
+mes_essai.txt
+dataset/
+pre/
+__pycache__/
+Les etapes.txt
+datasets/
