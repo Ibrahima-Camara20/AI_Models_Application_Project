@@ -1,8 +1,0 @@
-ultralytics
-retina-face 
-opencv-python 
-torch 
-torchvision 
-tensorflow 
-scikit-learn 
-matplotlib
