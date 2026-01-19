@@ -1,3 +1,12 @@
+"""
+⚠️ FICHIER DE RÉFÉRENCE SEULEMENT ⚠️
+
+Ce fichier est conservé comme référence mais n'est plus utilisé dans le pipeline principal.
+Pour exécuter le projet, utilisez : python src/eval.py
+
+Pour plus d'informations, consultez README.md
+"""
+
 import os
 import pandas as pd
 from deepface import DeepFace
