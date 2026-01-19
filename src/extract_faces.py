@@ -1,3 +1,12 @@
+"""
+⚠️ FICHIER DE RÉFÉRENCE SEULEMENT ⚠️
+
+Ce fichier est conservé comme référence mais n'est plus utilisé dans le pipeline principal.
+Pour exécuter le projet, utilisez : python src/eval.py
+
+Pour plus d'informations, consultez README.md
+"""
+
 import os
 import cv2
 from retinaface import RetinaFace
@@ -111,4 +120,4 @@ def extract_faces(input_dir, output_dir, confidence_threshold):
         raise
 
 if __name__ == "__main__":
-    extract_faces("../working", "../faces_dataset", 0.9)
+    extract_faces("working", "faces_dataset", 0.9)

@@ -9,3 +9,10 @@ pre/
 __pycache__/
 Les etapes.txt
 datasets/
+yolo11n.pt
+eval.py
+working/
+faces_dataset/
+faces_extracted/
+metadata.json   
+runs/
