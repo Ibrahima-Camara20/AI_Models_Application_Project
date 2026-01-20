@@ -1,13 +1,4 @@
-"""
-Module d'affichage formaté des résultats.
-Gère l'affichage des statistiques et évaluations.
-"""
-
 def display_yolo_evaluation(stats):
-    """
-    Affiche l'évaluation de YOLO de manière formatée.
-   
-    """
     print("\n" + "="*70)
     print("  ÉVALUATION - PERFORMANCE YOLO")
     print("="*70)

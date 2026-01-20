@@ -22,16 +22,17 @@ def main():
     Point d'entrée du script YOLO.
     """
     # Configuration
-    DATASET = "datasets"
+    DATASET = "datasets"  # Scanne récursivement tous les sous-dossiers
     WORKING = "working"
     METADATA = "metadata.json"
     
     print("\n" + "="*70)
     print("  DÉTECTION DE PERSONNES AVEC YOLO")
     print("="*70)
-    print(f"\n Entrée  : {DATASET}/")
+    print(f"\n Entrée  : {DATASET}/ (recherche récursive)")
     print(f" Sortie  : {WORKING}/")
     print(f" Métadonnées : {METADATA}")
+    print(f"\n ⚠️  Tous les dossiers contenant des images seront traités")
     
     # Créer le détecteur et traiter le dataset
     detector = YOLODetector('yolo11n.pt')
