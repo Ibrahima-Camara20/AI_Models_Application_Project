@@ -128,7 +128,7 @@ Le modèle `yolo11n.pt` sera téléchargé automatiquement au premier lancement.
 ### Lancer l'interface graphique
 
 ```bash
-python -m interface.main
+python -m src.main
 ```
 
 ### Workflow
