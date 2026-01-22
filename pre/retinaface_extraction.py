@@ -1,14 +1,16 @@
 import os
 # Désactivation des optimisations oneDNN pour réduire les logs
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+# Force l'utilisation de Keras 2 (Legacy) pour compatibilité avec retinaface
+os.environ["TF_USE_LEGACY_KERAS"] = "1"
+
+# Suppression des logs TensorFlow (WARNING/INFO) AVANT d'importer des libs qui utilisent TF
+import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 
 import cv2
 from retinaface import RetinaFace
 import numpy as np
-
-import tensorflow as tf
-# Suppression des logs TensorFlow (WARNING/INFO)
-tf.get_logger().setLevel('ERROR')
 
 # --- CONFIGURATION GPU ---
 # Permet d'éviter que TF prenne toute la VRAM et confirme l'utilisation du GPU
@@ -67,7 +69,8 @@ def extract_faces(input_dir, output_dir):
         if img is None: continue
 
         try:
-            obj = RetinaFace.detect_faces(img_path)
+            # On utilise detect_faces car extract_faces n'existe pas dans cette version
+            obj = RetinaFace.detect_faces(img_path, threshold=0.5)
         except Exception as e:
             print(f"[ERREUR] Sur {filename}: {e}")
             continue
@@ -75,16 +78,12 @@ def extract_faces(input_dir, output_dir):
         # Si des visages sont trouvés
         if isinstance(obj, dict) and len(obj) > 0:
             
-            # CORRECTION 3 : Logique "Max Area" pour éviter l'écrasement
             best_face_coords = None
             max_area = 0
 
             # On parcourt tous les candidats pour trouver le PLUS GROS visage (la star)
             for key, identity in obj.items():
-                                
                 x1, y1, x2, y2 = identity["facial_area"]
-                
-                # Calcul de l'aire
                 area = (x2 - x1) * (y2 - y1)
                 
                 if area > max_area:
@@ -96,15 +95,17 @@ def extract_faces(input_dir, output_dir):
                 x1, y1, x2, y2 = best_face_coords
                 h, w, _ = img.shape
 
-                # CORRECTION 2 : Correction des bornes (min au lieu de max pour x2/y2)
+                # Correction des bornes
                 x1 = max(0, x1)
                 y1 = max(0, y1)
                 x2 = min(w, x2) 
                 y2 = min(h, y2)
 
+                # Crop manuel
                 face_crop = img[y1:y2, x1:x2]
                 
-                # Sauvegarde
+                # Nouveau nom de fichier unique
+                
                 cv2.imwrite(os.path.join(output_dir, filename), face_crop)
                 count_success += 1
             else:
@@ -113,7 +114,7 @@ def extract_faces(input_dir, output_dir):
             count_no_face += 1
 
         # Log
-        if (i + 1) % 10 == 0:  # Log plus fréquent car RetinaFace est lent
+        if (i + 1) % 100 == 0:  # Log plus fréquent car RetinaFace est lent
             print(f"Progression : {i + 1}/{total_files} - Visages extraits : {count_success}")
 
     print("-" * 30)
@@ -123,4 +124,4 @@ def extract_faces(input_dir, output_dir):
     print(f"Pertes : {count_no_face}")
 
 if __name__ == "__main__":
-    extract_faces("datasets/105_classes_pins_dataset/pins_Adriana Lima/", "tests")
+    extract_faces("datasets/105_classes_pins_dataset/pins_Adriana Lima", "tests")
