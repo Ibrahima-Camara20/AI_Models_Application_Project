@@ -54,7 +54,7 @@ def load_database(db_path, model_name=DEFAULT_MODEL):
     print(f"\n--- 1. Encodage de la DB ({model_name}) ---")
 
     if not os.path.exists(db_path):
-        print(f"❌ ERREUR : Le dossier DB est introuvable : {db_path}")
+        print(f" ERREUR : Le dossier DB est introuvable : {db_path}")
         return None
 
     db_names = []
@@ -72,7 +72,7 @@ def load_database(db_path, model_name=DEFAULT_MODEL):
             db_matrix.append(emb)
 
     if not db_matrix:
-        print("❌ ERREUR : DB vide.")
+        print(" ERREUR : DB vide.")
         return None
 
     # Transformation en NumPy (Vectorisation)
@@ -81,7 +81,7 @@ def load_database(db_path, model_name=DEFAULT_MODEL):
 
     # Pré-calcul des normes pour le Cosinus
     db_norms = np.linalg.norm(db_matrix, axis=1)
-    print(f"✅ Matrice ArcFace prête : {db_matrix.shape}")
+    print(f" Matrice ArcFace prête : {db_matrix.shape}")
     
     return db_matrix, db_names, db_norms
 
@@ -90,11 +90,11 @@ def predict_arcface(test_path, db_data, output_csv=None, model_name=DEFAULT_MODE
     print("\n--- 2. Lancement du Test ArcFace ---")
 
     if not os.path.exists(test_path):
-        print(f"❌ ERREUR : Dossier Test introuvable : {test_path}")
+        print(f" ERREUR : Dossier Test introuvable : {test_path}")
         return None
         
     if db_data is None:
-        print("❌ ERREUR : Données DB invalides.")
+        print(" ERREUR : Données DB invalides.")
         return None
         
     db_matrix, db_names, db_norms = db_data
@@ -159,7 +159,7 @@ def predict_arcface(test_path, db_data, output_csv=None, model_name=DEFAULT_MODE
         if (i+1) % 100 == 0:
             elapsed = time.time() - start_time
             acc = batch_correct / (i+1)
-            print(f"📊 {i+1}/{total_files} | Acc ArcFace: {acc:.2%}")
+            print(f" {i+1}/{total_files} | Acc ArcFace: {acc:.2%}")
             
             # Sauvegarde intermédiaire
             if output_csv:
@@ -177,14 +177,14 @@ def predict_arcface(test_path, db_data, output_csv=None, model_name=DEFAULT_MODE
         elapsed_total = time.time() - start_time
         
         print("\n" + "="*40)
-        print(f"🏁 TRAITEMENT TERMINÉ en {elapsed_total/60:.1f} minutes")
-        print(f"🏆 ACCURACY FINALE (ARCFACE) : {acc_final:.2%}")
+        print(f" TRAITEMENT TERMINÉ en {elapsed_total/60:.1f} minutes")
+        print(f" ACCURACY FINALE (ARCFACE) : {acc_final:.2%}")
         if output_csv:
-            print(f"📁 Résultats : {output_csv}")
+            print(f" Résultats : {output_csv}")
         print("="*40)
         return final_df
     else:
-        print("\n⚠️ Aucun résultat généré.")
+        print("\n Aucun résultat généré.")
         return None
 
 def main():

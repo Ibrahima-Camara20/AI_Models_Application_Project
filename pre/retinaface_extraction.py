@@ -29,10 +29,65 @@ else:
 #input_dir = "/kaggle/working/working"
 #output_dir = "/kaggle/working/faces_dataset"
 
+def extract_faces_single(image_path, output_dir):
+    """Extrait le visage principal d'une seule image avec RetinaFace. """
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"L'image {image_path} n'existe pas")
+    
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    filename = os.path.basename(image_path)
+    
+    # Lecture de l'image
+    img = cv2.imread(image_path)
+    if img is None:
+        raise ValueError(f"Impossible de lire l'image {image_path}")
+    
+    try:
+        obj = RetinaFace.detect_faces(image_path)
+    except Exception as e:
+        raise Exception(f"Erreur RetinaFace sur {filename}: {e}")
+    
+    # Si des visages sont trouvés
+    if isinstance(obj, dict) and len(obj) > 0:
+        # Logique "Max Area" pour trouver le plus gros visage
+        best_face_coords = None
+        max_area = 0
+        
+        for key, identity in obj.items():
+            x1, y1, x2, y2 = identity["facial_area"]
+            area = (x2 - x1) * (y2 - y1)
+            
+            if area > max_area:
+                max_area = area
+                best_face_coords = [x1, y1, x2, y2]
+        
+        # Sauvegarde du meilleur visage
+        if best_face_coords is not None:
+            x1, y1, x2, y2 = best_face_coords
+            h, w, _ = img.shape
+            
+            # Correction des bornes
+            x1 = max(0, x1)
+            y1 = max(0, y1)
+            x2 = min(w, x2)
+            y2 = min(h, y2)
+            
+            face_crop = img[y1:y2, x1:x2]
+            
+            # Sauvegarde
+            cv2.imwrite(os.path.join(output_dir, filename), face_crop)
+            return 1
+    
+    return 0
+
+
 def extract_faces(input_dir, output_dir):
+    """Extrait les visages de toutes les images d'un dossier avec RetinaFace."""
     if not os.path.exists(input_dir):
         print(f"Le dossier {input_dir} n'existe pas ou est mal écrit")
-        return
+        return {"success": 0, "no_face": 0}
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -53,7 +108,7 @@ def extract_faces(input_dir, output_dir):
     
     if total_files == 0:
         print(f"[ATTENTION] Aucune image trouvée dans {input_dir}")
-        return
+        return {"success": 0, "no_face": 0}
 
     count_success = 0
     count_no_face = 0
@@ -130,5 +185,7 @@ def extract_faces(input_dir, output_dir):
     for filename in filenames:
         print(filename)
     """
+    
+    return {"success": count_success, "no_face": count_no_face}
 if __name__ == "__main__":
     extract_faces("second_rescue", "tests")

@@ -4,11 +4,7 @@ import seaborn as sns
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score
 import numpy as np
 
-""" --- CONFIGURATION de kaggle  ---
-INPUT_DIR = "/kaggle/input/pins-face-recognition/105_classes_pins_dataset"
-OUTPUT_DIR = "/kaggle/working/version-finale/working"
-SAVE_DIR = "/kaggle/working/version-finale"
-"""
+
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 IMG_EXTS = ('.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff')

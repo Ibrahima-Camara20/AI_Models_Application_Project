@@ -80,9 +80,10 @@ def names_match(predicted: str, filename_prefix: str) -> bool:
 
 
 def list_images_in_dir(folder: str) -> list[str]:
-    """ Liste tous les fichiers images dans un dossier. """
+    """Liste tous les fichiers images dans un dossier et ses sous-dossiers (récursif)."""
     paths = []
-    for f in os.listdir(folder):
-        if f.lower().endswith(IMG_EXTS):
-            paths.append(os.path.join(folder, f))
+    for root, dirs, files in os.walk(folder):
+        for f in files:
+            if f.lower().endswith(IMG_EXTS):
+                paths.append(os.path.join(root, f))
     return sorted(paths)
