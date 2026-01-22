@@ -9,16 +9,16 @@ from tkinter import ttk, filedialog, messagebox
 
 from PIL import Image, ImageTk
 
-from interface.core.text_utils import (
+from src.core.text_utils import (
     extract_name_prefix_from_filename,
     names_match,
     pretty_name,
     list_images_in_dir
 )
-from interface.core.model_loader import load_svm_model
-from interface.core.predictor import get_embedding, predict_identity
-from interface.core.pipeline import run_pipeline_single
-from interface.gui.constants import (
+from src.core.model_loader import load_svm_model
+from src.core.predictor import get_embedding, predict_identity
+from src.core.pipeline import run_pipeline_single
+from src.gui.constants import (
     WINDOW_WIDTH,
     WINDOW_HEIGHT,
     CANVAS_WIDTH,
