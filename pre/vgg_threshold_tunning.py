@@ -11,12 +11,12 @@ OUTPUT_PLOT = "img/stats/threshold_tuning.png"
 
 def optimize_threshold(csv_path):
     if not os.path.exists(csv_path):
-        print(f"❌ Fichier introuvable : {csv_path}")
+        print(f" Fichier introuvable : {csv_path}")
         return
 
     # 1. Chargement et Nettoyage
     df = pd.read_csv(csv_path)
-    print(f"📊 Analyse de {len(df)} prédictions...")
+    print(f" Analyse de {len(df)} prédictions...")
 
     # Détection automatique de la colonne "candidat trouvé"
     if 'best_match' in df.columns:
@@ -68,9 +68,9 @@ def optimize_threshold(csv_path):
 
     # 4. Rapport Final
     print("\n" + "="*40)
-    print(f"🏆 MEILLEUR SEUIL (Threshold) : {best_thresh:.2f}")
-    print(f"📈 F1-Score Max              : {best_f1:.2%}")
-    print(f"🎯 Accuracy associée         : {best_acc:.2%}")
+    print(f" MEILLEUR SEUIL (Threshold) : {best_thresh:.2f}")
+    print(f" F1-Score Max              : {best_f1:.2%}")
+    print(f" Accuracy associée         : {best_acc:.2%}")
     print("="*40)
 
     # 5. Visualisation Professionnelle

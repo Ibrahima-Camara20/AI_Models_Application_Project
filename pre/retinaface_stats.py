@@ -2,11 +2,7 @@ import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import confusion_matrix, accuracy_score, recall_score, classification_report
-"""
-# --- CONFIGURATION sur kaggle ---
-INPUT_DIR = "/kaggle/working/version-finale/working"        # Ce que YOLO a donné (Tout contient un humain)
-OUTPUT_DIR = "/kaggle/working/version-finale/faces_dataset" # Ce que RetinaFace a réussi à extraire
-"""
+
 def evaluate_retinaface_performance(input_dir, output_dir):
     print("--- GÉNÉRATION DU RAPPORT SCIKIT-LEARN ---")
 
@@ -26,7 +22,7 @@ def evaluate_retinaface_performance(input_dir, output_dir):
         y_true.append(1) 
         
         # Prédiction : Est-ce que le fichier existe dans le dossier de sortie ?
-        # (Note: Votre script précédent gardait le même nom de fichier, donc on compare directement)
+       
         if filename in output_files:
             y_pred.append(1) # Trouvé
         else:
@@ -51,8 +47,7 @@ def evaluate_retinaface_performance(input_dir, output_dir):
     # 4. Matrice de Confusion
     cm = confusion_matrix(y_true, y_pred, labels=[0, 1])
 
-    # On doit 'tricher' un peu pour l'affichage car on n'a pas de Vrais Négatifs 
-    # (on n'a pas testé d'images sans humains), donc la première ligne sera vide.
+   
     plt.figure(figsize=(6, 5))
     labels = ['Non Détecté', 'Détecté']
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=False,
