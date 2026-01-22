@@ -57,6 +57,7 @@ def extract_faces(input_dir, output_dir):
 
     count_success = 0
     count_no_face = 0
+    filenames = []
 
     for i, img_path in enumerate(files):
         # Naming robust : inclure le nom du dossier parent pour éviter les doublons (ex: "person1_1.jpg")
@@ -70,7 +71,7 @@ def extract_faces(input_dir, output_dir):
 
         try:
             # On utilise detect_faces car extract_faces n'existe pas dans cette version
-            obj = RetinaFace.detect_faces(img_path, threshold=0.5)
+            obj = RetinaFace.detect_faces(img_path)
         except Exception as e:
             print(f"[ERREUR] Sur {filename}: {e}")
             continue
@@ -109,12 +110,14 @@ def extract_faces(input_dir, output_dir):
                 cv2.imwrite(os.path.join(output_dir, filename), face_crop)
                 count_success += 1
             else:
+                filenames.append(filename)
                 count_no_face += 1
         else:
+            filenames.append(filename)
             count_no_face += 1
 
         # Log
-        if (i + 1) % 100 == 0:  # Log plus fréquent car RetinaFace est lent
+        if (i + 1) % 10 == 0:  # Log plus fréquent car RetinaFace est lent
             print(f"Progression : {i + 1}/{total_files} - Visages extraits : {count_success}")
 
     print("-" * 30)
@@ -123,5 +126,9 @@ def extract_faces(input_dir, output_dir):
     print(f"Visages extraits : {count_success}")
     print(f"Pertes : {count_no_face}")
 
+    """
+    for filename in filenames:
+        print(filename)
+    """
 if __name__ == "__main__":
-    extract_faces("datasets/105_classes_pins_dataset/pins_Adriana Lima", "tests")
+    extract_faces("second_rescue", "tests")

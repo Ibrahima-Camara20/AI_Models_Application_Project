@@ -17,7 +17,7 @@ def get_all_images(directory):
     return image_paths
 
 
-def yolo_detection(input_dir, output_dir):
+def yolo_detector(input_dir, output_dir):
     if not os.path.exists(input_dir):
         print(f"Le dossier {input_dir} n'est pas correct")
         return 
@@ -73,4 +73,4 @@ def yolo_detection(input_dir, output_dir):
     print(f"TERMINÉ ! Total d'images : {total_extracted}")
 
 if __name__ == "__main__":
-    yolo_detection("datasets/105_classes_pins_dataset/pins_Zendaya", "test")
+    yolo_detector("datasets", "test")
