@@ -36,9 +36,9 @@ from pre.retinaface_extraction import extract_faces_single
 # ============================================================================
 # Imports des modules de prédiction et utilitaires
 # ============================================================================
-from interface.core.predictor import get_embedding, predict_identity
-from interface.core.path_utils import ensure_dir, clean_dir, get_temp_dirs
-from interface.core.text_utils import list_images_in_dir
+from src.core.predictor import get_embedding, predict_identity
+from src.core.path_utils import ensure_dir, clean_dir, get_temp_dirs
+from src.core.text_utils import list_images_in_dir
 
 
 def run_pipeline_single(image_path: str, model_data: dict, backend: str, log_callback=None) -> dict:

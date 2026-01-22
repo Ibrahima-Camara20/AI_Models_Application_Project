@@ -14,7 +14,7 @@ Usage:
     app.mainloop()
 """
 
-from interface.gui.app import FacePredictApp
+from src.gui.app import FacePredictApp
 
 __version__ = "2.0.0"
 __all__ = ["FacePredictApp"]

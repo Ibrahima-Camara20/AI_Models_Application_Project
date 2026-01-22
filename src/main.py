@@ -5,7 +5,7 @@ Point d'entrée pour l'application de reconnaissance faciale.
 Lance l'interface graphique Tkinter. Dans le dossier principal tapez: python interface.main
 """
 
-from interface import FacePredictApp
+from src.gui.app import FacePredictApp
 
 
 def main():
