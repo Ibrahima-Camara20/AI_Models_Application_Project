@@ -12,18 +12,18 @@ def create_random_test_set():
     print("--- CRÉATION DU JEU DE TEST ALÉATOIRE ---")
     
     if not os.path.exists(SOURCE_DS):
-        print(f"❌ ERREUR : Dossier source introuvable : {SOURCE_DS}")
+        print(f" ERREUR : Dossier source introuvable : {SOURCE_DS}")
         return
 
     # Création (ou nettoyage) du dossier cible
     if os.path.exists(TARGET_DIR):
-        print(f"⚠️ Le dossier '{TARGET_DIR}' existe déjà.")
+        print(f" Le dossier '{TARGET_DIR}' existe déjà.")
         # On pourrait le vider, mais par sécurité on évite de supprimer sans demander.
         # shutil.rmtree(TARGET_DIR)
         # os.makedirs(TARGET_DIR)
     else:
         os.makedirs(TARGET_DIR)
-        print(f"✅ Dossier créé : {TARGET_DIR}")
+        print(f" Dossier créé : {TARGET_DIR}")
 
     # Lister les dossiers de célébrités
     celeb_dirs = [d for d in os.listdir(SOURCE_DS) if os.path.isdir(os.path.join(SOURCE_DS, d))]
@@ -48,13 +48,21 @@ def create_random_test_set():
         for i, img_name in enumerate(selected_images):
             src_file = os.path.join(celeb_path, img_name)
             
+<<<<<<< HEAD
             dst_file = os.path.join(TARGET_DIR, img_name)
+=======
+            
+            
+           
+            new_filename = f"{clean_celeb_name}_{i+1}_{img_name}"
+            dst_file = os.path.join(TARGET_DIR, new_filename)
+>>>>>>> 2893684b6e5e9d3f65f109c4ad0535c1f4a932fb
             
             shutil.copy2(src_file, dst_file)
             total_copied += 1
 
     print("\n" + "="*40)
-    print(f"✅ TERMINÉ. {total_copied} images copiées dans '{TARGET_DIR}'.")
+    print(f" TERMINÉ. {total_copied} images copiées dans '{TARGET_DIR}'.")
     print(f"Moyenne : {total_copied / len(celeb_dirs):.1f} images/célébrité")
     print("="*40)
 

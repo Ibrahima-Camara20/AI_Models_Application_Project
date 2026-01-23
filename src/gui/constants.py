@@ -15,7 +15,7 @@ CANVAS_HEIGHT = 500
 
 # Configuration des modèles d'embedding
 DEFAULT_BACKEND = "ArcFace"
-AVAILABLE_BACKENDS = ["ArcFace", "VGG11"]
+AVAILABLE_BACKENDS = ["ArcFace", "VGG-Face"]
 
 # Configuration du threading
 QUEUE_POLL_INTERVAL_MS = 120

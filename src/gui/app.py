@@ -9,15 +9,16 @@ from tkinter import ttk, filedialog, messagebox
 
 from PIL import Image, ImageTk
 
-from interface.core.text_utils import (
+from src.core.text_utils import (
     extract_name_prefix_from_filename,
     names_match,
     pretty_name,
     list_images_in_dir
 )
-from interface.core.model_loader import load_svm_model
-from interface.core.predictor import get_embedding, predict_identity
-from interface.gui.constants import (
+from src.core.model_loader import load_svm_model
+from src.core.predictor import get_embedding, predict_identity
+from src.core.pipeline import run_pipeline_single
+from src.gui.constants import (
     WINDOW_WIDTH,
     WINDOW_HEIGHT,
     CANVAS_WIDTH,
@@ -268,7 +269,7 @@ class FacePredictApp(tk.Tk):
         return "UNKNOWN", "UNKNOWN", true_prefix
 
     def predict_one_clicked(self):
-        """Effectue une prédiction sur l'image sélectionnée."""
+        """Effectue une prédiction sur l'image sélectionnée avec le pipeline complet."""
         if self.model_data is None:
             messagebox.showwarning("Modèle", "Charge d'abord un modèle .pkl.")
             return
@@ -279,18 +280,28 @@ class FacePredictApp(tk.Tk):
         backend = self.var_backend.get().strip()
         fname = os.path.basename(self.image_path)
 
-        self.log(f"\n[RUN] Single | Backend={backend} | file={fname}")
+        self.log(f"\n[RUN] Pipeline Single Image | Backend={backend} | file={fname}")
 
         try:
-            emb = get_embedding(self.image_path, backend)
-            pred_name, conf = predict_identity(self.model_data, emb)
+            # Exécuter le pipeline complet avec callback de logging
+            result = run_pipeline_single(self.image_path, self.model_data, backend, log_callback=self.log)
+            
+            if result["success"]:
+                pred_name = result["predicted_name"]
+                conf = result["confidence"]
+                
+                display, status, true_prefix = self.decide_display(fname, pred_name)
+                self.set_result(display, conf, status)
 
-            display, status, true_prefix = self.decide_display(fname, pred_name)
-            self.set_result(display, conf, status)
-
-            self.log(f"[INFO] filename_prefix={true_prefix}")
-            self.log(f"[INFO] predicted={pred_name}")
-            self.log(f"[OK] status={status}")
+                self.log(f"[INFO] filename_prefix={true_prefix}")
+                self.log(f"[INFO] predicted={pred_name}")
+                self.log(f"[OK] status={status}")
+            else:
+                # Erreur dans le pipeline
+                self.set_result("ERROR", None, "ERROR")
+                self.log(f"[ERROR] Pipeline échoué à l'étape '{result['stage']}'")
+                self.log(f"[ERROR] {result['error']}")
+                messagebox.showerror("Erreur Pipeline", result['error'])
 
         except Exception as e:
             self.set_result("ERROR", None, "ERROR")
@@ -303,7 +314,7 @@ class FacePredictApp(tk.Tk):
     
     def _batch_worker(self, images: list[str], backend: str):
         """
-        Worker thread pour le traitement batch.
+        Worker thread pour le traitement batch avec pipeline.
         
         Args:
             images: Liste des chemins d'images
@@ -316,18 +327,32 @@ class FacePredictApp(tk.Tk):
                 break
 
             fname = os.path.basename(img_path)
+            
+            # Callback pour logger via la queue
+            def batch_log(msg):
+                self.q.put(("log", msg))
+            
             try:
-                emb = get_embedding(img_path, backend)
-                pred_name, conf = predict_identity(self.model_data, emb)
+                # Exécuter le pipeline complet avec logging
+                result = run_pipeline_single(img_path, self.model_data, backend, log_callback=batch_log)
+                
+                if result["success"]:
+                    pred_name = result["predicted_name"]
+                    conf = result["confidence"]
+                    stats = result["stats"]
+                    
+                    display, status, true_prefix = self.decide_display(fname, pred_name)
 
-                display, status, true_prefix = self.decide_display(fname, pred_name)
-
-                self.q.put(("show", img_path))
-                self.q.put(("result", (display, conf, status)))
-                self.q.put((
-                    "log", 
-                    f"[{i}/{total}] {fname} | prefix={true_prefix} | pred={pred_name} | {status}"
-                ))
+                    self.q.put(("show", img_path))
+                    self.q.put(("result", (display, conf, status)))
+                    self.q.put((
+                        "log", 
+                        f"[{i}/{total}] {fname} | P:{stats['persons_detected']} F:{stats['faces_detected']} | pred={pred_name} | {status}"
+                    ))
+                else:
+                    # Pipeline échoué
+                    self.q.put(("log", f"[{i}/{total}] {fname} | ÉCHEC: {result['error']}"))
+                    self.q.put(("result", ("ERROR", None, "ERROR")))
 
             except Exception as e:
                 self.q.put(("log", f"[ERROR] {fname}: {type(e).__name__} - {e}"))
