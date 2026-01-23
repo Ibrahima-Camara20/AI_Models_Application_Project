@@ -5,14 +5,16 @@ data/
 outputs/
 SETUP_INTEL_GPU.txt
 mes_essai.txt
-pre/
 __pycache__/
 Les etapes.txt
 datasets/
 yolo11n.pt
 eval.py
 working/
+data_test/
 faces_dataset/
 faces_extracted/
 metadata.json   
 runs/
+*.pt
+faces_extraction/
