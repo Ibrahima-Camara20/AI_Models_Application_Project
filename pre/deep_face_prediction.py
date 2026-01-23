@@ -14,11 +14,11 @@ def configure_gpu():
         try:
             for gpu in gpus:
                 tf.config.experimental.set_memory_growth(gpu, True)
-            print(f"🚀 GPU ACTIVÉ : {len(gpus)} trouvé(s). Prêt pour ArcFace.")
+            print(f" GPU ACTIVÉ : {len(gpus)} trouvé(s). Prêt pour ArcFace.")
         except RuntimeError as e:
             print(f"Erreur GPU : {e}")
     else:
-        print("⚠️ ATTENTION : Pas de GPU détecté.")
+        print(" ATTENTION : Pas de GPU détecté.")
 
 # ================= 1. PARAMÈTRES ARCFACE =================
 DEFAULT_MODEL = "ArcFace" # Le modèle "État de l'art"

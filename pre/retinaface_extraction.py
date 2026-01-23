@@ -29,8 +29,18 @@ else:
 #input_dir = "/kaggle/working/working"
 #output_dir = "/kaggle/working/faces_dataset"
 
-def extract_faces_single(image_path, output_dir):
-    """Extrait le visage principal d'une seule image avec RetinaFace. """
+def extract_faces_single(image_path, output_dir, return_boxes=False):
+    """Extrait le visage principal d'une seule image avec RetinaFace.
+    
+    Args:
+        image_path: Chemin vers l'image
+        output_dir: Dossier de sortie
+        return_boxes: Si True, retourne aussi les coordonnées des boxes
+        
+    Returns:
+        Si return_boxes=False: Nombre de visages extraits (0 ou 1)
+        Si return_boxes=True: tuple (count, boxes) où boxes = [(x1, y1, x2, y2), ...]
+    """
     if not os.path.exists(image_path):
         raise FileNotFoundError(f"L'image {image_path} n'existe pas")
     
@@ -49,6 +59,8 @@ def extract_faces_single(image_path, output_dir):
     except Exception as e:
         raise Exception(f"Erreur RetinaFace sur {filename}: {e}")
     
+    boxes_list = []
+    
     # Si des visages sont trouvés
     if isinstance(obj, dict) and len(obj) > 0:
         # Logique "Max Area" pour trouver le plus gros visage
@@ -58,6 +70,10 @@ def extract_faces_single(image_path, output_dir):
         for key, identity in obj.items():
             x1, y1, x2, y2 = identity["facial_area"]
             area = (x2 - x1) * (y2 - y1)
+            
+            # Stocker toutes les boxes si demandé
+            if return_boxes:
+                boxes_list.append((x1, y1, x2, y2))
             
             if area > max_area:
                 max_area = area
@@ -78,8 +94,12 @@ def extract_faces_single(image_path, output_dir):
             
             # Sauvegarde
             cv2.imwrite(os.path.join(output_dir, filename), face_crop)
+            if return_boxes:
+                return 1, boxes_list
             return 1
     
+    if return_boxes:
+        return 0, boxes_list
     return 0
 
 

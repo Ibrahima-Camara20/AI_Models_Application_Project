@@ -48,15 +48,9 @@ def create_random_test_set():
         for i, img_name in enumerate(selected_images):
             src_file = os.path.join(celeb_path, img_name)
             
-<<<<<<< HEAD
-            dst_file = os.path.join(TARGET_DIR, img_name)
-=======
-            
-            
-           
+            # Créer un nom de fichier descriptif avec le nom de la célébrité
             new_filename = f"{clean_celeb_name}_{i+1}_{img_name}"
             dst_file = os.path.join(TARGET_DIR, new_filename)
->>>>>>> 2893684b6e5e9d3f65f109c4ad0535c1f4a932fb
             
             shutil.copy2(src_file, dst_file)
             total_copied += 1
