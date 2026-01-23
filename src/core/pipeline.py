@@ -41,19 +41,23 @@ from src.core.path_utils import ensure_dir, clean_dir, get_temp_dirs
 from src.core.text_utils import list_images_in_dir
 
 
-def run_pipeline_single(image_path: str, model_data: dict, backend: str, log_callback=None) -> dict:
+def run_pipeline_single(image_path: str, model_data: dict, backend: str, 
+                       log_callback=None, status_callback=None, cleanup=True) -> dict:
     """
     Exécute le pipeline complet sur une seule image.
     
-    Pipeline :
-    1. YOLO détecte les personnes → working/
-    2. RetinaFace extrait les visages → faces_extraction/
-    3. Prédiction sur le visage extrait
+    Args:
+        cleanup: Si True, vide les dossiers temporaires avant le traitement.
     """
     def log(msg):
         """Helper pour logger les messages si un callback est fourni."""
         if log_callback:
             log_callback(msg)
+    
+    def update_status(stage, status, count=None):
+        """Helper pour mettre à jour le statut du pipeline."""
+        if status_callback:
+            status_callback(stage, status, count)
     
     # ========================================================================
     # Préparation des dossiers temporaires
@@ -63,9 +67,10 @@ def run_pipeline_single(image_path: str, model_data: dict, backend: str, log_cal
     working_dir = temp_dirs["working"]        # Pour les crops de personnes (YOLO)
     faces_dir = temp_dirs["faces_extraction"]  # Pour les visages extraits (RetinaFace)
     
-    # Nettoyer les dossiers pour éviter les conflits avec d'anciennes données
-    clean_dir(working_dir)
-    clean_dir(faces_dir)
+    if cleanup:
+        # Nettoyer les dossiers pour éviter les conflits avec d'anciennes données
+        clean_dir(working_dir)
+        clean_dir(faces_dir)
     
     # Créer les dossiers s'ils n'existent pas
     ensure_dir(working_dir)
@@ -83,6 +88,10 @@ def run_pipeline_single(image_path: str, model_data: dict, backend: str, log_cal
         "stats": {
             "persons_detected": 0,  # Nombre de personnes détectées par YOLO
             "faces_detected": 0     # Nombre de visages détectés par RetinaFace
+        },
+        "boxes": {
+            "yolo_boxes": [],       # Bounding boxes YOLO [(x1, y1, x2, y2, conf), ...]
+            "retinaface_boxes": []  # Bounding boxes RetinaFace [(x1, y1, x2, y2), ...]
         }
     }
     
@@ -92,58 +101,74 @@ def run_pipeline_single(image_path: str, model_data: dict, backend: str, log_cal
         # ====================================================================
         log("[PIPELINE] Étape 1/3 : Détection YOLO...")
         result["stage"] = "yolo"
+        update_status('yolo', 'running')
         
-        # Détecter les personnes dans l'image
+        # Détecter les personnes dans l'image avec récupération des boxes
         # Les crops des personnes seront sauvegardés dans working/
-        persons_detected = yolo_detection_single(image_path, working_dir)
+        persons_detected, yolo_boxes = yolo_detection_single(image_path, working_dir, return_boxes=True)
         result["stats"]["persons_detected"] = persons_detected
+        result["boxes"]["yolo_boxes"] = yolo_boxes
         
         log(f"[PIPELINE] ✓ Personnes détectées : {persons_detected}")
         
         # Vérifier qu'au moins une personne a été détectée
         if persons_detected == 0:
             result["error"] = "Aucune personne détectée par YOLO"
+            update_status('yolo', 'error')
             return result
+        
+        update_status('yolo', 'success', persons_detected)
         
         # ====================================================================
         # ÉTAPE 2 : EXTRACTION DES VISAGES AVEC RETINAFACE
         # ====================================================================
         log("[PIPELINE] Étape 2/3 : Extraction RetinaFace...")
         result["stage"] = "retinaface"
+        update_status('retinaface', 'running')
         
         # Récupérer toutes les images de personnes détectées par YOLO
         person_images = list_images_in_dir(working_dir)
         
         if not person_images:
             result["error"] = "Aucune image de personne trouvée dans working/"
+            update_status('retinaface', 'error')
             return result
         
         # Extraire les visages de toutes les personnes détectées
         # Pour chaque crop de personne, RetinaFace extrait le visage principal
         faces_detected = 0
+        all_retinaface_boxes = []
+        
         for person_img in person_images:
-            faces_count = extract_faces_single(person_img, faces_dir)
-            faces_detected += faces_count
+            face_count, face_boxes = extract_faces_single(person_img, faces_dir, return_boxes=True)
+            faces_detected += face_count
+            all_retinaface_boxes.extend(face_boxes)
         
         result["stats"]["faces_detected"] = faces_detected
+        result["boxes"]["retinaface_boxes"] = all_retinaface_boxes
         log(f"[PIPELINE] ✓ Visages détectés : {faces_detected}")
         
         # Vérifier qu'au moins un visage a été détecté
         if faces_detected == 0:
             result["error"] = "Aucun visage détecté par RetinaFace"
+            update_status('retinaface', 'error')
             return result
+        
+        update_status('retinaface', 'success', faces_detected)
         
         # ====================================================================
         # ÉTAPE 3 : PRÉDICTION DE L'IDENTITÉ
         # ====================================================================
         log("[PIPELINE] Étape 3/3 : Prédiction...")
         result["stage"] = "prediction"
+        update_status('prediction', 'running')
         
         # Récupérer les visages extraits par RetinaFace
         face_images = list_images_in_dir(faces_dir)
         
         if not face_images:
             result["error"] = "Aucune image de visage trouvée dans faces_extraction/"
+            update_status('prediction', 'error')
             return result
         
         # Prédire sur le premier visage
@@ -163,6 +188,7 @@ def run_pipeline_single(image_path: str, model_data: dict, backend: str, log_cal
         result["success"] = True
         result["predicted_name"] = predicted_name
         result["confidence"] = confidence
+        update_status('prediction', 'success')
         log(f"[PIPELINE] ✓ Prédiction terminée")
         
     except FileNotFoundError as e:

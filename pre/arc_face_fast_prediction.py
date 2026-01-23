@@ -38,11 +38,11 @@ if gpus:
         for gpu in gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
         tf.keras.backend.set_floatx('float32')
-        print(f"🚀 GPU détecté : {len(gpus)} device(s).")
+        print(f" GPU détecté : {len(gpus)} device(s).")
     except RuntimeError as e:
         print(f"Erreur GPU config: {e}")
 else:
-    print("⚠️ Pas de GPU détecté. Le script fonctionnera CPU-only.")
+    print(" Pas de GPU détecté. Le script fonctionnera CPU-only.")
 
 # ========== utilitaires ==========
 def clean_label(filename: str) -> str:

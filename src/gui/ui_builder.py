@@ -1,0 +1,146 @@
+"""
+Module de construction d'interface pour l'application de reconnaissance faciale.
+
+Fournit des fonctions pour construire les différentes sections de l'UI.
+"""
+import tkinter as tk
+from tkinter import ttk
+
+from src.gui.constants import (
+    CANVAS_WIDTH,
+    CANVAS_HEIGHT,
+    CANVAS_BG_COLOR,
+    MODEL_ENTRY_WIDTH,
+    BACKEND_COMBO_WIDTH,
+    AVAILABLE_BACKENDS,
+    FONT_RESULT_NAME,
+    FONT_RESULT_INFO,
+    FONT_SECTION_TITLE,
+    TEXT_LOG_WIDTH,
+    TEXT_LOG_HEIGHT
+)
+from src.gui.pipeline_status_widget import PipelineStatusWidget
+from src.gui.batch_stats_widget import BatchStatsWidget
+
+
+def build_config_section(parent, var_model, var_backend, on_pick_model):
+    """Construit la section de configuration (modèle et backend)."""
+    top = ttk.LabelFrame(parent, text="Configuration")
+    top.pack(fill="x", padx=10, pady=8)
+    
+    # Sélection du modèle
+    ttk.Label(top, text="Modèle (.pkl):").grid(row=0, column=0, sticky="w", padx=6, pady=6)
+    ttk.Entry(top, textvariable=var_model, width=MODEL_ENTRY_WIDTH).grid(
+        row=0, column=1, sticky="we", padx=6
+    )
+    ttk.Button(top, text="Parcourir", command=on_pick_model).grid(row=0, column=2, padx=6)
+    
+    # Sélection du backend
+    ttk.Label(top, text="Embedding:").grid(row=1, column=0, sticky="w", padx=6, pady=6)
+    ttk.Combobox(
+        top,
+        textvariable=var_backend,
+        values=AVAILABLE_BACKENDS,
+        state="readonly",
+        width=BACKEND_COMBO_WIDTH
+    ).grid(row=1, column=1, sticky="w", padx=6)
+    
+    top.columnconfigure(1, weight=1)
+    
+    return top
+
+
+def build_image_section(parent, on_pick_image, on_pick_folder, on_predict, 
+                       on_stop, on_toggle_boxes, var_show_boxes):
+    """Construit la section d'affichage d'image (gauche)."""
+    left = ttk.LabelFrame(parent, text="Photo")
+    left.pack(side="left", fill="both", expand=True, padx=(0, 10))
+    
+    # Canvas pour l'image
+    canvas = tk.Canvas(left, bg=CANVAS_BG_COLOR, width=CANVAS_WIDTH, height=CANVAS_HEIGHT)
+    canvas.pack(fill="both", expand=True, padx=8, pady=8)
+    
+    # Boutons d'action
+    btns = ttk.Frame(left)
+    btns.pack(fill="x", padx=8, pady=(0, 6))
+    ttk.Button(btns, text="Choisir une image", command=on_pick_image).pack(side="left")
+    ttk.Button(btns, text="Choisir un dossier", command=on_pick_folder).pack(
+        side="left", padx=(8, 0)
+    )
+    ttk.Button(btns, text="Prédire", command=on_predict).pack(
+        side="left", padx=(8, 0)
+    )
+    btn_stop = ttk.Button(btns, text="STOP", command=on_stop, state="disabled")
+    btn_stop.pack(side="left", padx=(8, 0))
+    
+    # Barre de progression
+    progress = ttk.Progressbar(left, mode="determinate")
+    progress.pack(fill="x", padx=8, pady=(0, 6))
+    lbl_prog = ttk.Label(left, text="0 / 0")
+    lbl_prog.pack(anchor="w", padx=8)
+    
+    # Checkbox pour afficher les détections
+    chk_boxes = ttk.Checkbutton(
+        left,
+        text="Afficher les détections (YOLO + RetinaFace)",
+        variable=var_show_boxes,
+        command=on_toggle_boxes
+    )
+    chk_boxes.pack(anchor="w", padx=8, pady=(6, 0))
+    
+    return canvas, progress, lbl_prog, btn_stop
+
+
+def build_results_section(parent):
+    """Construit la section de résultats (droite)."""
+    right = ttk.Frame(parent)
+    right.pack(side="right", fill="both", expand=False)
+    
+    # Widget de statut du pipeline
+    pipeline_widget = PipelineStatusWidget(right)
+    pipeline_widget.pack(fill="x", padx=8, pady=8)
+    
+    # Séparateur
+    ttk.Separator(right, orient="horizontal").pack(fill="x", padx=8, pady=8)
+    
+    # Résultats de prédiction
+    result_frame = ttk.LabelFrame(right, text="Prédiction")
+    result_frame.pack(fill="x", padx=8, pady=(0, 8))
+    
+    lbl_name = ttk.Label(result_frame, text="—", font=FONT_RESULT_NAME)
+    lbl_name.pack(anchor="w", padx=12, pady=(16, 6))
+    
+    lbl_conf = ttk.Label(result_frame, text="Confiance: —", font=FONT_RESULT_INFO)
+    lbl_conf.pack(anchor="w", padx=12, pady=4)
+    
+    # Barre de confiance visuelle
+    confidence_bar = ttk.Progressbar(result_frame, mode="determinate", length=200)
+    confidence_bar.pack(fill="x", padx=12, pady=4)
+    
+    lbl_status = ttk.Label(result_frame, text="Status: —", font=FONT_RESULT_INFO)
+    lbl_status.pack(anchor="w", padx=12, pady=(4, 16))
+    
+    # Séparateur
+    ttk.Separator(right, orient="horizontal").pack(fill="x", padx=8, pady=8)
+    
+    # [NEW] Widget statistiques batch
+    stats_widget = BatchStatsWidget(right)
+    stats_widget.pack(fill="x", padx=8, pady=(0, 8))
+    
+    # Séparateur
+    ttk.Separator(right, orient="horizontal").pack(fill="x", padx=12, pady=8)
+    
+    # Logs
+    ttk.Label(right, text="Logs:", font=FONT_SECTION_TITLE).pack(anchor="w", padx=12)
+    txt_log = tk.Text(right, width=TEXT_LOG_WIDTH, height=TEXT_LOG_HEIGHT, wrap="word")
+    txt_log.pack(fill="both", expand=True, padx=12, pady=(6, 12))
+    
+    return {
+        "pipeline_widget": pipeline_widget,
+        "lbl_name": lbl_name,
+        "lbl_conf": lbl_conf,
+        "confidence_bar": confidence_bar,
+        "lbl_status": lbl_status,
+        "stats_widget": stats_widget,
+        "txt_log": txt_log
+    }
