@@ -48,14 +48,7 @@ def create_random_test_set():
         for i, img_name in enumerate(selected_images):
             src_file = os.path.join(celeb_path, img_name)
             
-            # Nommage à plat : Nom_Index.jpg (pour compatibilité vgg_prediction)
-            # ou garder le nom original si besoin. 
-            # Le user veut "mettre dans un dossier data_test". 
-            # Pour vgg_prediction, il faut que le nom contienne l'identité.
-            
-            # On va créer un nom sans équivoque
-            new_filename = f"{clean_celeb_name}_{i+1}_{img_name}"
-            dst_file = os.path.join(TARGET_DIR, new_filename)
+            dst_file = os.path.join(TARGET_DIR, img_name)
             
             shutil.copy2(src_file, dst_file)
             total_copied += 1

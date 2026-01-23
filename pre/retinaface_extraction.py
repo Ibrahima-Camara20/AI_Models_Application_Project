@@ -131,4 +131,4 @@ def extract_faces(input_dir, output_dir):
         print(filename)
     """
 if __name__ == "__main__":
-    extract_faces("second_rescue", "tests")
+    extract_faces("img/celebrity_db", "img/celebrity_db_cropped")
