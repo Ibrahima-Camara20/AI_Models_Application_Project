@@ -3,16 +3,13 @@ __pycache__/
 data_splits/
 data/
 outputs/
-SETUP_INTEL_GPU.txt
-mes_essai.txt
-pre/
 __pycache__/
-Les etapes.txt
 datasets/
-yolo11n.pt
-eval.py
 working/
+data_test/
+test_images/
 faces_dataset/
-faces_extracted/
+faces_extraction/
 metadata.json   
-runs/
+*.pkl
+*.pt

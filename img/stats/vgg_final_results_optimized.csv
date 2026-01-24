@@ -1,0 +1,119 @@
+filename,true_label,predicted,distance,similarity,status,correct
+Adriana Lima233_134-person-0-bb-0-1-436-463.jpg,adriana lima,adriana lima,0.5384,0.4616,OK,True
+Adriana Lima7_188-person-0-bb-0-0-302-320.jpg,adriana lima,adriana lima,0.3434,0.6566,OK,True
+Alex Lawther115_13-person-0-bb-2-0-118-128.jpg,alex lawther,alex lawther,0.5291,0.4709,OK,True
+Alvaro Morte90_281-person-0-bb-0-0-97-108.jpg,alvaro morte,alvaro morte,0.3982,0.6018,OK,True
+alycia dabnem carey184_78-person-0-bb-0-0-209-221.jpg,alycia dabnem carey,alycia dabnem carey,0.4809,0.5191,OK,True
+Amanda Crew15_32-person-0-bb-1-2-437-415.jpg,amanda crew,amanda crew,0.5538,0.4462,OK,True
+amber heard167_278-person-0-bb-0-0-209-221.jpg,amber heard,amber heard,0.2872,0.7128,OK,True
+Andy Samberg15_484-person-0-bb-2-0-342-387.jpg,andy samberg,andy samberg,0.3732,0.6268,OK,True
+Anne Hathaway23_411-person-0-bb-0-0-299-320.jpg,anne hathaway,anne hathaway,0.2347,0.7653,OK,True
+Anthony Mackie61_542-person-0-bb-2-15-102-108.jpg,anthony mackie,anthony mackie,0.4767,0.5233,OK,True
+Avril Lavigne102_567-person-0-bb-1-0-206-220.jpg,avril lavigne,avril lavigne,0.626,0.374,OK,True
+Avril Lavigne181_625-person-0-bb-1-0-170-184.jpg,avril lavigne,brie larson,0.6685,0.3315,MISS,False
+barack obama155_660-person-0-bb-0-0-251-266.jpg,barack obama,barack obama,0.4938,0.5062,OK,True
+barack obama236_696-person-1-bb-4-0-174-185.jpg,barack obama,barack obama,0.6192,0.3808,OK,True
+barbara palvin123_767-person-0-bb-0-0-255-266.jpg,barbara palvin,katherine langford,0.4728,0.5272,MISS,False
+barbara palvin126_772-person-0-bb-0-0-101-108.jpg,barbara palvin,barbara palvin,0.6291,0.3709,OK,True
+Ben Affleck190_175-person-0-bb-2-11-89-108.jpg,ben affleck,ben affleck,0.4395,0.5605,OK,True
+Ben Affleck197_179-person-0-bb-0-0-144-154.jpg,ben affleck,chris pratt,0.6369,0.3631,MISS,False
+Bobby Morley0_245-person-0-bb-0-0-143-154.jpg,bobby morley,unknown,0.7621,0.2379,MISS,False
+Bobby Morley108_256-person-0-bb-0-0-172-184.jpg,bobby morley,unknown,0.7407,0.2593,SEUIL,False
+Brenton Thwaites106_737-person-0-bb-0-0-355-387.jpg,brenton thwaites,brenton thwaites,0.038,0.962,OK,True
+Brenton Thwaites126_753-person-0-bb-12-0-121-129.jpg,brenton thwaites,brenton thwaites,0.6426,0.3574,OK,True
+Brian J. Smith243_676-person-0-bb-0-2-468-546.jpg,brian j. smith,brian j. smith,0.4733,0.5267,OK,True
+Brie Larson146_983-person-0-bb-0-8-170-184.jpg,brie larson,brie larson,0.5949,0.4051,OK,True
+Brie Larson87_1096-person-0-bb-10-0-146-154.jpg,brie larson,elizabeth lail,0.6124,0.3876,MISS,False
+Chris Hemsworth191_444-person-0-bb-6-0-101-108.jpg,chris hemsworth,chris hemsworth,0.5804,0.4196,OK,True
+Chris Pratt206_806-person-1-bb-13-0-120-127.jpg,chris pratt,chris pratt,0.545,0.455,OK,True
+Chris Pratt49_859-person-0-bb-6-1-436-462.jpg,chris pratt,chris pratt,0.674,0.326,OK,True
+Christian Bale10_546-person-0-bb-0-3-174-185.jpg,christian bale,christian bale,0.5002,0.4998,OK,True
+Christian Bale82_687-person-0-bb-8-2-99-105.jpg,christian bale,christian bale,0.6365,0.3635,OK,True
+Cristiano Ronaldo52_1355-person-0-bb-2-0-251-266.jpg,cristiano ronaldo,cristiano ronaldo,0.623,0.377,OK,True
+Danielle Panabaker131_1405-person-0-bb-0-1-365-387.jpg,danielle panabaker,danielle panabaker,0.3369,0.6631,OK,True
+Eliza Taylor26_814-person-0-bb-0-0-174-185.jpg,eliza taylor,barbara palvin,0.6637,0.3363,MISS,False
+Eliza Taylor32_822-person-0-bb-0-0-102-108.jpg,eliza taylor,eliza taylor,0.6318,0.3682,OK,True
+Elizabeth Lail12_1071-person-0-bb-0-0-301-319.jpg,elizabeth lail,elizabeth lail,0.4086,0.5914,OK,True
+Elizabeth Lail9_1203-person-0-bb-0-0-244-265.jpg,elizabeth lail,elizabeth lail,0.5988,0.4012,OK,True
+elizabeth olsen225_1232-person-0-bb-15-6-102-108.jpg,elizabeth olsen,elizabeth olsen,0.5179,0.4821,OK,True
+ellen page102_1337-person-0-bb-0-0-209-225.jpg,ellen page,ellen page,0.4473,0.5527,OK,True
+Emma Watson48_2002-person-0-bb-0-0-173-185.jpg,emma watson,emma watson,0.5042,0.4958,OK,True
+Emma Watson58_2010-person-0-bb-0-0-357-463.jpg,emma watson,emma watson,0.6401,0.3599,OK,True
+grant gustin10_1859-person-0-bb-0-0-209-221.jpg,grant gustin,grant gustin,0.36,0.64,OK,True
+Gwyneth Paltrow75_2225-person-0-bb-0-0-119-128.jpg,gwyneth paltrow,gwyneth paltrow,0.5055,0.4945,OK,True
+Gwyneth Paltrow91_2238-person-0-bb-0-0-145-155.jpg,gwyneth paltrow,brie larson,0.6506,0.3494,MISS,False
+Henry Cavil78_1257-person-0-bb-0-0-249-266.jpg,henry cavil,chris pratt,0.6279,0.3721,MISS,False
+Hugh Jackman152_1308-person-0-bb-14-1-102-108.jpg,hugh jackman,unknown,0.7647,0.2353,SEUIL,False
+Hugh Jackman202_1338-person-0-bb-0-0-302-319.jpg,hugh jackman,hugh jackman,0.6501,0.3499,OK,True
+Inbar Lavi198_1499-person-0-bb-0-0-160-184.jpg,inbar lavi,inbar lavi,0.2541,0.7459,OK,True
+Jake Mcdorman20_1275-person-0-bb-0-0-173-185.jpg,jake mcdorman,jake mcdorman,0.5145,0.4855,OK,True
+Jason Momoa81_2575-person-0-bb-0-0-297-318.jpg,jason momoa,johnny depp,0.4579,0.5421,MISS,False
+Jennifer Lawrence213_1677-person-0-bb-0-0-146-155.jpg,jennifer lawrence,jennifer lawrence,0.4373,0.5627,OK,True
+Jennifer Lawrence213_1681-person-0-bb-0-0-145-154.jpg,jennifer lawrence,unknown,0.7062,0.2938,MISS,False
+Jessica Barden218_1456-person-0-bb-5-0-118-128.jpg,jessica barden,katherine langford,0.6757,0.3243,MISS,False
+Jessica Barden7_1494-person-0-bb-0-0-175-185.jpg,jessica barden,unknown,0.6885,0.3115,MISS,False
+Jimmy Fallon112_2765-person-0-bb-3-0-291-320.jpg,jimmy fallon,jimmy fallon,0.4448,0.5552,OK,True
+Johnny Depp106_1771-person-0-bb-1-0-99-108.jpg,johnny depp,nadia hilker,0.67,0.33,MISS,False
+Josh Radnor204_2197-person-0-bb-3-0-137-155.jpg,josh radnor,penn badgley,0.6493,0.3507,MISS,False
+Katharine Mcphee69_1672-person-0-bb-0-1-250-266.jpg,katharine mcphee,katharine mcphee,0.4512,0.5488,OK,True
+Keanu Reeves103_1953-person-0-bb-0-0-90-108.jpg,keanu reeves,unknown,0.7015,0.2985,MISS,False
+kiernen shipka32_2407-person-0-bb-0-0-302-320.jpg,kiernen shipka,kiernen shipka,0.0014,0.9986,OK,True
+kiernen shipka47_2422-person-0-bb-0-1-430-462.jpg,kiernen shipka,kiernen shipka,0.429,0.571,OK,True
+Krysten Ritter133_1720-person-0-bb-0-0-119-129.jpg,krysten ritter,emma watson,0.6232,0.3768,MISS,False
+Leonardo DiCaprio130_2501-person-1-bb-0-0-207-220.jpg,leonardo dicaprio,unknown,0.7415,0.2585,MISS,False
+Leonardo DiCaprio93_2708-person-0-bb-0-0-164-184.jpg,leonardo dicaprio,rami malek,0.6704,0.3296,MISS,False
+Lili Reinhart15_2746-person-0-bb-0-0-205-221.jpg,lili reinhart,lili reinhart,0.5068,0.4932,OK,True
+Lindsey Morgan44_2242-person-0-bb-0-0-146-155.jpg,lindsey morgan,lindsey morgan,0.3665,0.6335,OK,True
+Logan Lerman133_2317-person-0-bb-1-0-299-320.jpg,logan lerman,logan lerman,0.6439,0.3561,OK,True
+Logan Lerman142_2325-person-0-bb-0-0-294-320.jpg,logan lerman,logan lerman,0.5859,0.4141,OK,True
+Madelaine Petsch181_2933-person-0-bb-0-0-144-155.jpg,madelaine petsch,madelaine petsch,0.4691,0.5309,OK,True
+Madelaine Petsch202_2951-person-2-bb-59-68-98-97.jpg,madelaine petsch,unknown,0.76,0.24,MISS,False
+Maisie Williams167_2555-person-0-bb-1-0-175-185.jpg,maisie williams,maisie williams,0.3919,0.6081,OK,True
+margot robbie150_3114-person-0-bb-2-0-434-463.jpg,margot robbie,margot robbie,0.4836,0.5164,OK,True
+Maria Pedraza165_1898-person-0-bb-0-0-146-154.jpg,maria pedraza,lili reinhart,0.6463,0.3537,MISS,False
+Maria Pedraza8_1981-person-0-bb-0-0-365-380.jpg,maria pedraza,maria pedraza,0.4874,0.5126,OK,True
+Marie Avgeropoulos172_2746-person-0-bb-0-0-172-184.jpg,marie avgeropoulos,marie avgeropoulos,0.2557,0.7443,OK,True
+Mark Ruffalo148_3214-person-0-bb-0-0-145-155.jpg,mark ruffalo,unknown,0.7461,0.2539,MISS,False
+Mark Ruffalo164_3224-person-0-bb-0-0-299-320.jpg,mark ruffalo,mark ruffalo,0.4724,0.5276,OK,True
+Megan Fox84_3564-person-0-bb-0-0-143-155.jpg,megan fox,megan fox,0.3807,0.6193,OK,True
+melissa fumero188_3341-person-0-bb-0-0-203-221.jpg,melissa fumero,emilia clarke,0.5189,0.4811,MISS,False
+melissa fumero92_3431-person-0-bb-0-0-205-225.jpg,melissa fumero,melissa fumero,0.6195,0.3805,OK,True
+Miley Cyrus201_3668-person-0-bb-2-0-102-108.jpg,miley cyrus,miley cyrus,0.4972,0.5028,OK,True
+Miley Cyrus28_3698-person-0-bb-0-0-301-320.jpg,miley cyrus,miley cyrus,0.4653,0.5347,OK,True
+Millie Bobby Brown45_3910-person-0-bb-0-0-276-320.jpg,millie bobby brown,selena gomez,0.6075,0.3925,MISS,False
+Morgan Freeman99_3136-person-0-bb-0-0-120-128.jpg,morgan freeman,morgan freeman,0.389,0.611,OK,True
+Nadia Hilker127_21-person-0-bb-0-1-412-462.jpg,nadia hilker,selena gomez,0.6023,0.3977,MISS,False
+Natalie Dormer38_266-person-0-bb-0-1-302-319.jpg,natalie dormer,natalie dormer,0.5472,0.4528,OK,True
+Neil Patrick Harris185_3660-person-0-bb-4-0-97-108.jpg,neil patrick harris,unknown,0.6924,0.3076,SEUIL,False
+Pedro Alonso76_2202-person-0-bb-0-0-102-108.jpg,pedro alonso,unknown,0.7176,0.2824,MISS,False
+Penn Badgley186_2284-person-0-bb-13-0-102-108.jpg,penn badgley,penn badgley,0.5745,0.4255,OK,True
+Penn Badgley210_2303-person-0-bb-1-0-121-129.jpg,penn badgley,unknown,0.6942,0.3058,MISS,False
+Rami Malek153_3765-person-1-bb-1-1-209-225.jpg,rami malek,rami malek,0.5321,0.4679,OK,True
+Rebecca Ferguson160_384-person-0-bb-1-0-101-108.jpg,rebecca ferguson,eliza taylor,0.6739,0.3261,MISS,False
+Richard Harmon40_615-person-0-bb-1-0-100-128.jpg,richard harmon,richard harmon,0.599,0.401,OK,True
+Sarah Wayne Callies178_2441-person-0-bb-0-0-100-108.jpg,sarah wayne callies,sarah wayne callies,0.556,0.444,OK,True
+Sarah Wayne Callies42_2500-person-0-bb-0-0-173-185.jpg,sarah wayne callies,sarah wayne callies,0.5405,0.4595,OK,True
+scarlett johansson160_3946-person-0-bb-0-0-206-221.jpg,scarlett johansson,adriana lima,0.6056,0.3944,MISS,False
+Selena Gomez26_4442-person-0-bb-0-0-207-220.jpg,selena gomez,marie avgeropoulos,0.583,0.417,MISS,False
+Selena Gomez26_4442-person-1-bb-2-0-206-218.jpg,selena gomez,marie avgeropoulos,0.5884,0.4116,MISS,False
+Selena Gomez75_4480-person-0-bb-0-0-173-184.jpg,selena gomez,selena gomez,0.602,0.398,OK,True
+Shakira Isabel Mebarak50_122-person-0-bb-0-1-364-387.jpg,shakira isabel mebarak,katharine mcphee,0.6022,0.3978,MISS,False
+Sophie Turner18_890-person-0-bb-0-18-297-316.jpg,sophie turner,amber heard,0.6474,0.3526,MISS,False
+Sophie Turner18_890-person-1-bb-3-2-301-296.jpg,sophie turner,amber heard,0.6496,0.3504,MISS,False
+Sophie Turner89_1010-person-0-bb-0-1-99-108.jpg,sophie turner,sophie turner,0.6604,0.3396,OK,True
+Taylor Swift208_4615-person-0-bb-7-7-302-319.jpg,taylor swift,taylor swift,0.4914,0.5086,OK,True
+Taylor Swift66_4659-person-0-bb-0-0-173-184.jpg,taylor swift,taylor swift,0.1355,0.8645,OK,True
+Taylor Swift66_4659-person-1-bb-8-0-170-185.jpg,taylor swift,taylor swift,0.1137,0.8863,OK,True
+Tom Cruise50_1167-person-0-bb-1-0-166-184.jpg,tom cruise,unknown,0.6958,0.3042,MISS,False
+tom ellis36_4383-person-0-bb-3-0-251-270.jpg,tom ellis,tom ellis,0.5087,0.4913,OK,True
+Tom Hardy69_1381-person-0-bb-5-0-237-266.jpg,tom hardy,tom hardy,0.5257,0.4743,OK,True
+Tom Hiddleston190_1492-person-0-bb-12-0-206-221.jpg,tom hiddleston,tom hiddleston,0.5754,0.4246,OK,True
+Tom Hiddleston81_1578-person-0-bb-0-0-98-108.jpg,tom hiddleston,tom hiddleston,0.6569,0.3431,OK,True
+Tuppence Middleton147_2577-person-0-bb-0-0-208-221.jpg,tuppence middleton,tuppence middleton,0.5103,0.4897,OK,True
+Tuppence Middleton70_2660-person-0-bb-1-0-145-155.jpg,tuppence middleton,sophie turner,0.6045,0.3955,MISS,False
+Ursula Corbero227_95-person-0-bb-5-0-246-266.jpg,ursula corbero,ursula corbero,0.5356,0.4644,OK,True
+Ursula Corbero89_159-person-0-bb-0-0-121-128.jpg,ursula corbero,selena gomez,0.6688,0.3312,MISS,False
+Wentworth Miller118_20-person-0-bb-6-0-100-108.jpg,wentworth miller,wentworth miller,0.4694,0.5306,OK,True
+Wentworth Miller22_105-person-0-bb-8-0-365-386.jpg,wentworth miller,unknown,0.7711,0.2289,MISS,False
+Zac Efron67_1758-person-0-bb-1-0-121-128.jpg,zac efron,unknown,0.7151,0.2849,MISS,False
+Zoe Saldana176_4935-person-0-bb-1-0-121-129.jpg,zoe saldana,zoe saldana,0.4035,0.5965,OK,True
