@@ -288,8 +288,8 @@ present in an image~\cite{redmon2018yolo}. This stage is designed to maximize re
 range of potential candidates, even in complex scenes with cluttered backgrounds.
 
 Second, RetinaFace is applied to the detected person regions in order to precisely
-localize facial areasSecond, RetinaFace is applied to the detected person regions in order to precisely
 localize facial areas~\cite{liu2017retinaface}.
+
 . Compared to generic detectors, RetinaFace provides more
 accurate and stable face bounding boxes, while also acting as a quality filter by
 discarding low-confidence detections and extremely small faces.
@@ -386,6 +386,46 @@ Detected persons and extracted faces are highlighted directly on the input image
 bounding boxes, while predicted identities are displayed alongside confidence indicators.
 This visualization facilitates qualitative assessment of the system’s behavior and helps
 identify potential sources of error.
+\subsection{Pipeline Visualization and Practical Validation}
+
+This part of the report is particularly important as it demonstrates the practical
+implementation and real-world behavior of the proposed face recognition system.
+While quantitative results provide objective performance measurements, visual inspection
+through the graphical user interface enables qualitative validation of the entire pipeline.
+
+The graphical application makes it possible to observe the interaction between the different
+processing stages in a transparent and interpretable manner. Each step of the pipeline,
+including person detection (YOLO), face extraction (RetinaFace), and identity prediction
+(VGG-Face + SVM), is executed sequentially and visualized in real time.
+
+Bounding boxes corresponding to detected persons and extracted faces are displayed directly
+on the input images, along with predicted identities and associated confidence scores.
+This visualization allows verification that detections are spatially consistent, that faces
+are correctly localized, and that identity predictions are coherent with visual appearance.
+
+Figure~\ref{fig:app_gui} illustrates two representative use cases of the application.
+The first example shows a multi-person scenario, where multiple individuals are detected
+and correctly identified within the same image.
+The second example presents a single-face recognition case, highlighting the confidence
+score associated with the predicted identity.
+
+These visual results confirm that the system is not only theoretically correct but also
+fully operational and usable in practice. They provide an essential qualitative complement
+to quantitative evaluation by revealing system behavior under realistic conditions,
+including challenging backgrounds, varying poses, and multiple subjects.
+
+Overall, the application interface plays a crucial role in validating the robustness,
+interpretability, and practical applicability of the proposed face recognition pipeline.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{app_demo_multi.png}
+\hfill
+\includegraphics[width=0.48\textwidth]{app_demo_single.png}
+\caption{Graphical user interface of the face recognition application.
+Left: multi-person detection and identification using YOLO and RetinaFace.
+Right: single-face recognition with confidence score displayed.}
+\label{fig:app_gui}
+\end{figure}
 
 \subsection{Monitoring and User Experience}
 
@@ -397,6 +437,36 @@ are displayed when necessary, contributing to a smooth and transparent user expe
 Overall, the graphical interface transforms the face recognition pipeline into a complete
 and user-oriented application, bridging the gap between algorithmic development and
 practical deployment.
+\subsection{Command-Line Interface (CLI) Execution}
+
+In addition to the graphical user interface, the face recognition system also provides
+a command-line interface (CLI) mode. This execution mode is particularly important for
+automation, batch processing, and reproducibility of experiments.
+
+The CLI allows users to process either a single image or an entire directory by specifying
+the input path and selecting the desired face embedding model.
+This mode follows exactly the same processing pipeline as the graphical application,
+including person detection using YOLO, face extraction with RetinaFace, and identity
+prediction based on deep facial embeddings and an SVM classifier.
+
+During execution, detailed logs are displayed in the terminal, including information about
+the selected model, processing stages, execution time, and prediction results.
+This textual feedback provides full transparency on the internal behavior of the system
+and facilitates debugging, performance analysis, and large-scale evaluation.
+
+Figure~\ref{fig:cli_execution} illustrates an example of CLI execution, showing the sequential
+processing of the pipeline and the final identity predictions with associated confidence
+scores. This confirms that the proposed system can be deployed both interactively and in
+fully automated environments, increasing its practical applicability.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{cli_execution.png}
+\caption{Example of command-line execution of the face recognition pipeline.
+The output shows model selection, YOLO detection, RetinaFace extraction, and final
+identity predictions with confidence scores.}
+\label{fig:cli_execution}
+\end{figure}
+
 \section{Results and Evaluation}
 
 This section presents the experimental results obtained with the proposed face recognition
@@ -504,7 +574,9 @@ Face recognition & VGG-Face + SVM & 61.1\% accuracy & Cleaned reference data \\
 
 Table~\ref{tab:pipeline_summary} provides a global overview of the face recognition pipeline,
 highlighting the progressive filtering of samples and the impact of data quality on
-recognition performance.
+recognition performance.The 61.1\% accuracy reflects the performance of the full end-to-end pipeline on the complete
+dataset, while the higher accuracy values reported in the model comparison correspond to a
+controlled evaluation protocol designed to compare embedding models under identical conditions.
 
 The summarized results emphasize the cumulative effect of design choices across the pipeline.
 While early detection stages aim to preserve recall, later filtering steps prioritize face
@@ -556,6 +628,23 @@ qualitative analysis is essential to better understand error patterns and failur
 These results illustrate the trade-off between computational efficiency and
 embedding compactness when selecting a face representation model.
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{model_accuracy_comparison.jpeg}
+\caption{Recognition accuracy comparison between ArcFace, FaceNet, and VGG-Face models.}
+\label{fig:model_accuracy}
+\end{figure}
+Figure~\ref{fig:model_accuracy} shows the recognition accuracy obtained with different
+face embedding models under identical experimental conditions.
+Among the evaluated architectures, VGG-Face achieves the highest accuracy (0.88),
+outperforming ArcFace (0.83) and FaceNet (0.81).
+
+This result indicates that, despite its higher embedding dimensionality and computational
+cost, VGG-Face provides stronger discriminative power in this experimental setup.
+The larger representation capacity appears to better capture identity-specific facial
+features, particularly in the presence of challenging conditions such as blur, pose
+variation, and background noise.
+
 
 \subsection{Qualitative Analysis}
 
@@ -605,12 +694,21 @@ a wide range of potential candidates, RetinaFace acts as a quality filter by dis
 ambiguous or low-quality detections. This design choice directly influences the quality
 of extracted embeddings and, consequently, the final recognition accuracy.
 
-The comparison between different embedding models further emphasizes the importance of
-feature representation. High-capacity models demonstrate stronger discriminative power
-but introduce increased computational cost. In contrast, more compact models reduce
-memory requirements but may impact inference time or separability in the embedding space.
-These observations confirm that the choice of an embedding model should be guided by the
-intended deployment scenario rather than accuracy alone.
+In addition, the comparative accuracy analysis highlights that VGG-Face outperforms both
+ArcFace and FaceNet on the considered dataset. While ArcFace offers a good compromise
+between precision and embedding compactness, VGG-Face achieves superior recognition
+accuracy, at the cost of higher dimensionality.
+This result suggests that, in closed-set celebrity identification scenarios, discriminative
+capacity may outweigh memory efficiency when computational resources are not a limiting
+factor.
+
+The comparison between different embedding models confirms that no single architecture
+is universally optimal. However, in the context of this project, VGG-Face consistently
+achieves the highest recognition accuracy.
+This suggests that accuracy-oriented applications benefit from higher-capacity embeddings,
+while more compact models such as ArcFace or FaceNet remain relevant when computational
+efficiency or memory constraints are critical.
+
 
 Error analysis reveals that most misclassifications occur under challenging conditions,
 such as low-resolution images, partial occlusions, or visually similar identities. These
@@ -659,8 +757,21 @@ feature extraction, supervised classification, and a user-friendly graphical int
 
 The experimental evaluation demonstrates that the chosen methodology is effective for
 celebrity identification and highlights the advantages of deep embedding-based approaches.
+A comparative analysis of multiple face embedding models shows that VGG-Face achieves the
+highest recognition accuracy in this experimental setup, confirming its strong discriminative
+capabilities when data quality is properly controlled.
+
+The comparative evaluation of multiple embedding models further demonstrates that
+VGG-Face provides the best recognition accuracy on this dataset, reinforcing the importance
+of selecting feature representations adapted to the target application rather than relying
+solely on model compactness.
+
+
 The application successfully supports both single-image analysis and large-scale batch
-processing, enabling comprehensive evaluation and practical usability.
+processing, enabling comprehensive evaluation and practical usability. The availability of
+both graphical and command-line execution modes further strengthens the practical relevance
+of the proposed system, allowing intuitive interactive use as well as reproducible and
+scalable experimentation through automated batch processing.
 
 Several perspectives for future work can be considered. These include extending the system
 to open-set recognition scenarios, fine-tuning deep models on domain-specific data, and
@@ -672,6 +783,7 @@ environments relies as much on data quality and pipeline design as on the choice
 models. The results underline the importance of careful preprocessing, robust detection, and
 rigorous evaluation when deploying face recognition systems in unconstrained real-world
 scenarios.
+
 
 
 \section{Team Members and Contributions}
@@ -745,3 +857,4 @@ accessed 2025.
 \end{thebibliography}
 
 \end{document}
+
