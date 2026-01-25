@@ -5,8 +5,8 @@ from tqdm import tqdm
 
 # --- CONFIGURATION ---
 SOURCE_DS = os.path.join("datasets", "105_classes_pins_dataset")
-TARGET_DIR = "data_test"
-SAMPLES_PER_CLASS = 2
+TARGET_DIR = "img/data_test/"
+SAMPLES_PER_CLASS = 1
 
 def create_random_test_set():
     print("--- CRÉATION DU JEU DE TEST ALÉATOIRE ---")

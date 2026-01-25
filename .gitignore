@@ -13,3 +13,4 @@ faces_extraction/
 metadata.json   
 *.pkl
 *.pt
+models/
